@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import Game from '../pages/Game';
 import App from '../App';
-import { playerGames }  from './mockAPI';
+import { playerGames, playersInfo }  from './mockAPI';
 import { questionsResponse } from '../../cypress/mocks/questions';
 
 const token = 'f00cb469ce38726ee00a7c6836761b0a4fb808181a125dcde6d50a9f3c9127b6';
@@ -39,8 +39,46 @@ describe('Teste tela Games', () => {
 		expect(corAnswer).toBeInTheDocument();
 		expect(btns[0]).toBeInTheDocument();
 	});
+	test('renderização de perguntas sem pré localStorage', async () => {
+		global.fetch = jest.spyOn(global, 'fetch');
+	    global.fetch.mockResolvedValue({
+    	  json: jest.fn().mockResolvedValue(questionsResponse),
+    	});
+		
+		const { history } = renderWithRouterAndRedux(<App />, playerGames, '/game');
+		
+		const btnCorrect = await screen.findByTestId('correct-answer');
+		userEvent.click(btnCorrect);
 
-	test('renderização de respostas', async () => {
+		const btnNext = screen.getByTestId('btn-next');
+		expect(btnNext).toBeInTheDocument();
+
+		userEvent.click(btnNext);
+
+		userEvent.click(btnCorrect);
+		userEvent.click(screen.getByTestId('btn-next'));
+
+		userEvent.click(btnCorrect);
+		userEvent.click(screen.getByTestId('btn-next'));
+
+		userEvent.click(btnCorrect);
+		userEvent.click(screen.getByTestId('btn-next'));
+
+		userEvent.click(btnCorrect);
+
+		const btnNextEnd = screen.getByTestId('btn-next');
+		expect(btnNextEnd).toBeInTheDocument();
+		userEvent.click(btnNextEnd);
+		expect(btnNextEnd).not.toBeInTheDocument();
+
+		const { pathname } = history.location;
+		expect(pathname). toBe('/feedback');
+	});
+	test('renderização de respostas com pré localStorage', async () => {
+		global.localStorage.setItem('ranking', JSON.stringify(playersInfo.ranking));
+		const spy = jest.spyOn(Object.getPrototypeOf
+			(global.localStorage), 'getItem').mockImplementation(() => JSON.stringify(playersInfo.ranking));
+
 		global.fetch = jest.spyOn(global, 'fetch');
 	    global.fetch.mockResolvedValue({
     	  json: jest.fn().mockResolvedValue(questionsResponse),
@@ -87,19 +125,11 @@ describe('Teste tela Games', () => {
 
 		jest.useFakeTimers();
     	jest.advanceTimersByTime(33000);
-
+		
+		const timerShow = await screen.findByTestId('timer-test');
 		expect(btnCorrect).toBeDisabled;
 
-		// jest.clearAllTimers();
-
-		// jest.useFakeTimers();
-		// jest.advanceTimersByTime(15000);
-
-		// const timerShow = await screen.findByRole('heading', { name: /30/i });
-
-		// expect(timerShow).toBeInTheDocument();
-
-		// jest.clearAllTimers();
+		expect(timerShow).toBeInTheDocument();
 	});
 	test('Invalid token', async () => {
 		global.fetch = jest.spyOn(global, 'fetch');
@@ -125,10 +155,9 @@ describe('Teste tela Games', () => {
 		const { history } = renderWithRouterAndRedux(<App />, playerGames, '/game');
 
 		jest.useFakeTimers();
-		jest.advanceTimersByTime(15000);
+		jest.advanceTimersByTime(33000);
 
-		const timerShow = await screen.findByRole('heading', { name: /17/i });
-
+		const timerShow = await screen.findByTestId('timer-test');
 		expect(timerShow).toBeInTheDocument();
 	});
 });

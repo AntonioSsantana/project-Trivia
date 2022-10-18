@@ -52,7 +52,6 @@ class Game extends React.Component {
         throw new Error('error');
       }
     } catch (error) {
-      // console.error('Expired Token, please re-send request in login');
       history.push('/');
     }
     const newAnswers = this.randomAnswers(response);
@@ -87,15 +86,7 @@ class Game extends React.Component {
 
   handleClickCorrect = (difficulty) => {
     const { timer } = this.state;
-    let levelDif;
-    const THREE = 3;
-    if (difficulty === 'hard') {
-      levelDif = THREE;
-    } else if (difficulty === 'medium') {
-      levelDif = 2;
-    } else {
-      levelDif = 1;
-    }
+    const levelDif = this.setDifficulty(difficulty);
     const TEN = 10;
     const plusScore = TEN + (timer * levelDif);
     this.setState((prevState) => ({
@@ -104,6 +95,16 @@ class Game extends React.Component {
       showAnswer: true,
       response: true,
     }), this.registerScoreAndAssertions);
+  };
+
+  setDifficulty = (difficulty) => {
+    const THREE = 3;
+    if (difficulty === 'hard') {
+      return THREE;
+    } if (difficulty === 'medium') {
+      return 2;
+    }
+    return 1;
   };
 
   registerScoreAndAssertions = () => {
@@ -144,12 +145,8 @@ class Game extends React.Component {
   };
 
   render() {
-    const { questions, nQuestion, isLoading,
-      score,
-      timer,
-      showAnswer,
-      disabled,
-      response } = this.state;
+    const { questions, nQuestion, isLoading, score, timer,
+      showAnswer, disabled, response } = this.state;
     return (
       <div>
         <Header />
@@ -220,7 +217,7 @@ class Game extends React.Component {
                     </button>
                   )
                 }
-                <h3>
+                <h3 data-testid="timer-test">
                   {timer}
                 </h3>
               </div>
@@ -231,13 +228,10 @@ class Game extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (state) => ({ name: state.player.name,
   url: state.player.url,
 });
-
 Game.defaultProps = { url: '' };
-
 Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
@@ -246,5 +240,4 @@ Game.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string,
 };
-
 export default connect(mapStateToProps)(Game);
