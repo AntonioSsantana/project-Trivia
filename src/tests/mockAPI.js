@@ -95,3 +95,20 @@ export const playerGames = {
   } */
 }
 
+
+
+  export const playersInfo = {
+    ranking: [
+    {
+      name: 'NomePessoa',
+      score: 150,
+      picture: 'url_da_foto_da_pessoa',
+    },
+    {
+      name: 'OutraPessoa',
+      score: 100,
+      picture: 'url_da_foto_da__de_outr_pessoa',
+    }
+  ],
+  };
+  
