@@ -6,7 +6,7 @@ import { scoreAct } from '../Redux/actions';
 import '../App.css';
 import './css/Games.css';
 
-class Games extends React.Component {
+class Game extends React.Component {
   state = {
     questions: {},
     score: 0,
@@ -26,7 +26,7 @@ class Games extends React.Component {
     setTimeout(() => {
       const update = setInterval(() => {
         this.setState((prev) => {
-          if (prev.timer === 1) {
+          if (prev.timer === 0) {
             clearInterval(update);
             this.setState({
               disabled: true,
@@ -49,10 +49,10 @@ class Games extends React.Component {
       const data = await fetch(url);
       response = await data.json();
       if (response.response_code === THREE) {
-        throw error;
+        throw new Error('error');
       }
     } catch (error) {
-      console.error('Expired Token, please re-send request in login');
+      // console.error('Expired Token, please re-send request in login');
       history.push('/');
     }
     const newAnswers = this.randomAnswers(response);
@@ -63,7 +63,7 @@ class Games extends React.Component {
     const FIVE = 5;
     const TWO = 2;
     let ans = [];
-    response.results.forEach((res) => {
+    response.results?.forEach((res) => {
       if (res.type === 'multiple') {
         const randomN = Math.floor(Math.random() * FIVE);
         ans = [...res.incorrect_answers];
@@ -120,6 +120,7 @@ class Games extends React.Component {
     this.setState((prev) => ({
       nQuestion: prev.nQuestion + 1,
       response: false,
+      disabled: false,
       timer: 30,
     }));
     if (nQuestion === FOUR) {
@@ -209,7 +210,7 @@ class Games extends React.Component {
                   }
                 </div>
                 {
-                  (response) && (
+                  (response || disabled) && (
                     <button
                       type="button"
                       data-testid="btn-next"
@@ -235,9 +236,9 @@ const mapStateToProps = (state) => ({ name: state.player.name,
   url: state.player.url,
 });
 
-Games.defaultProps = { url: '' };
+Game.defaultProps = { url: '' };
 
-Games.propTypes = {
+Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -246,4 +247,4 @@ Games.propTypes = {
   url: PropTypes.string,
 };
 
-export default connect(mapStateToProps)(Games);
+export default connect(mapStateToProps)(Game);
