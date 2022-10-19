@@ -1,53 +1,54 @@
 * {
-    padding: 0;
-    margin: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    background-color: rgb(181, 222, 173);
+  background-color: rgb(181, 222, 173);
+  display: flex;
 }
 
 .body-login {
-    display: flex;
-    flex-direction: column;
-    margin-left: 450px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 450px;
 }
 
 .header-login {
-    display: flex;
-    font-family: 'Permanent Marker';
-    color: rgb(46, 0, 20);
-    letter-spacing: 5px;
-    margin-top: 30%;
+  color: rgb(46, 0, 20);
+  display: flex;
+  font-family: Permanent Marker , sans-serif;
+  letter-spacing: 5px;
+  margin-top: 30%;
 }
 
 .form-login {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20%;
-    gap: 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20%;
 }
 
 .label-login {
-    font-weight: 600;
-    color: rgb(68, 34, 32);
+  color: rgb(68, 34, 32);
+  font-weight: 600;
 }
 
 .input-login {
-    border: 1px solid rgb(68, 34, 32);
+  border: 1px solid rgb(68, 34, 32);
 }
 
 /* Example */
 
 /* CSS */
 button {
+  border: 0;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
   cursor: pointer;
   display: inline-block;
-  font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-family: Inter , system-ui , Roboto , Helvetica Neue , Arial , sans-serif;
   height: 40px;
   line-height: 40px;
   outline: 0;
@@ -57,14 +58,12 @@ button {
   position: relative;
   text-align: center;
   touch-action: manipulation;
+  transition: box-shadow 0.2s;
   user-select: none;
-  -webkit-user-select: none;
   vertical-align: top;
   white-space: nowrap;
   width: 60%;
   z-index: 9;
-  border: 0;
-  transition: box-shadow .2s;
 }
 
 button:hover {

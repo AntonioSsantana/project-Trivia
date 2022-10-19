@@ -1,0 +1,9 @@
+.div-header {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  font-size: 25px;
+  gap: 20px;
+  margin-left: 40px;
+  margin-top: 35px;
+}
