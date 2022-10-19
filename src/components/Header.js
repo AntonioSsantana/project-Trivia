@@ -30,13 +30,10 @@ class Header extends React.Component {
         />
         <h4 id="header-player-name" data-testid="header-player-name">
           Nome:
-          {' '}
           {userName}
         </h4>
         <h4 id="header-score" data-testid="header-score">
-          Total:
-          {' '}
-          {userScore}
+          {parseInt(userScore, 10)}
         </h4>
       </div>
     );
@@ -57,7 +54,7 @@ Header.defaultProps = {
 const mapStateToProps = (state) => ({
   email: state.player.gravatarEmail,
   userName: state.player.name,
-  userScore: state.player.score,
+  userScore: Number(state.player.score),
 });
 
 export default connect(mapStateToProps)(Header);
