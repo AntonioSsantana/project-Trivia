@@ -8,37 +8,39 @@
 <details><summary>redux</summary>
 
 <details><summary>reducers</summary>
-combineReducers.js
 
-index.js
+`combineReducers.js`
+
+`index.js`
+
 </details>
 </details>
 
 <details><summary>components</summary>
 
-Header.js
+`Header.js`
 
 </details>
 
 <details><summary>pages</summary>
 
-Feedback.js
+`Feedback.js`
 
-Game.js
+`Game.js`
 
-Login.js
+`Login.js`
 
-Ranking.js
+`Ranking.js`
 
-Settings.js
+`Settings.js`
 
 </details>
 
 <details><summary>tests</summary>
 
-Login.test.js
+`Login.test.js`
 
-mockAPI.js
+`mockAPI.js`
 
 </details>
 
