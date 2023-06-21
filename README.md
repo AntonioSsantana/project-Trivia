@@ -1,6 +1,6 @@
 # Projeto Trivia React Redux
 
-Este é um projeto de um jogo de trivia desenvolvido em React, utilizando Redux para gerenciamento de estado. O objetivo do projeto é criar uma aplicação interativa onde os usuários possam responder perguntas de trivia.
+Este é um projeto de um jogo de trivia desenvolvido em JavaScript, utilizando, React e Redux para gerenciamento de estado. O objetivo do projeto é criar uma aplicação interativa onde os usuários possam responder perguntas de trivia.
 
 ## Funcionalidades
 
